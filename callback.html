@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorization Callback</title>
+</head>
+<body>
+    <h1>Authorization Callback</h1>
+    <p>Processing authorization...</p>
+
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get('code');  // Get the 'code' parameter
+
+        if (authCode) {
+            console.log('Authorization Code:', authCode);
+
+            // Optionally, send this authorization code to your backend for further processing
+            fetch('https://your-backend-server.com/process-auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code: authCode })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Auth processed:', data);
+            })
+            .catch(error => {
+                console.error('Error processing auth:', error);
+            });
+        } else {
+            console.error('No authorization code found.');
+        }
+    </script>
+</body>
+</html>
